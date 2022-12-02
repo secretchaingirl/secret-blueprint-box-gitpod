@@ -1,0 +1,66 @@
+# List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
+github:
+  prebuilds:
+    # enable for the master/default branch (defaults to true)
+    master: true
+    # enable for all branches in this repo (defaults to false)
+    branches: false
+    # enable for pull requests coming from this repo (defaults to true)
+    pullRequests: false
+    # enable for pull requests coming from forks (defaults to false)
+    pullRequestsFromForks: false
+    # add a "Review in Gitpod" button as a comment to pull requests (defaults to true)
+    addComment: false
+    # add a "Review in Gitpod" button to pull requests (defaults to false)
+    addBadge: false
+    # add a label once the prebuild is ready to pull requests (defaults to false)
+    addLabel: prebuilt-in-gitpod
+
+tasks:
+  - name: LocalSecret
+    init: |
+      echo "Pull LocalSecret image v1.4.0"
+      docker pull ghcr.io/scrtlabs/localsecret:v1.4.0
+    command: |
+      echo "LocalSecret environment ready"
+    openMode: split-right
+
+  - name: Secret Box Workspace
+    init: |
+      echo "Install integration test dependencies"
+      cd  tests
+      npm install
+      npm install -D ts-node
+      echo "Install Vue"
+      yarn global add @vue/cli
+      echo "Install frontend dependencies"
+      cd ../app
+      yarn install 
+    command: |
+      echo "Setup Rust toolchain"
+      rustup install nightly
+      rustup target add wasm32-unknown-unknown --toolchain nightly
+      rustup default nightly
+    openMode: split-right
+
+  - name: Secret Box Frontend
+    command: |
+      cd app
+      echo "Setup Vite Environment variable"
+      #
+      # Need to unset the VITE env vars so that the new values are read when app/.env is updated
+      #
+      unset VITE_SECRET_BOX_CODE
+      unset VITE_SECRET_BOX_ADDRESS
+      unset VITE_SECRET_BOX_HASH
+    openMode: split-right
+
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - name: Secret Box App Preview
+    port: 5173
+    onOpen: open-preview
+  - name: Local Secret gRPC
+    port: 9091
+  - name: Local Faucet
+    port: 5000
