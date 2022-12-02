@@ -30,6 +30,8 @@ tasks:
       cd  tests
       npm install
       npm install -D ts-node
+      echo "Install yarn"
+      sudo apt install yarn -y
       echo "Install Vue"
       yarn global add @vue/cli
       echo "Install frontend dependencies"
