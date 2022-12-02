@@ -31,7 +31,7 @@ tasks:
       npm install
       npm install -D ts-node
       echo "Install yarn"
-      sudo apt install yarn -y
+      sudo npm install --global yarn
       echo "Install Vue"
       yarn global add @vue/cli
       echo "Install frontend dependencies"
