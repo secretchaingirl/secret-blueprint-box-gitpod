@@ -1,3 +1,5 @@
+image: ghcr.io/scrtlabs/localsecret-gitpod:latest
+
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 github:
   prebuilds:
@@ -18,9 +20,6 @@ github:
 
 tasks:
   - name: LocalSecret
-    init: |
-      echo "Pull LocalSecret image v1.4.0"
-      docker pull ghcr.io/scrtlabs/localsecret:v1.4.0
     command: |
       echo "LocalSecret environment ready"
     openMode: split-right
@@ -55,12 +54,46 @@ tasks:
       unset VITE_SECRET_BOX_HASH
     openMode: split-right
 
+vscode:
+  extensions:
+    - rust-lang.rust
+    - serayuzgur.crates
+    - bungcip.better-toml
+      
+jetbrains:
+  intellij:
+    plugins:
+      - io.digiline.secretideplugin
+      - org.rust.lang
+      - org.toml.lang
+
 # List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+
 ports:
+  - name: LocalSecret RPC
+    port: 26657
+    onOpen: ignore
+    visibility: public
+  - name: LocalSecret gRPC-Web
+    port: 9090-9091
+    onOpen: ignore
+    visibility: public
+  - name: Secret Faucet
+    port: 5000
+    onOpen: ignore
+    visibility: public
+  - name: LocalSecret LCD
+    port: 1317
+    onOpen: ignore
+    visibility: public
+  - port: 3000
+    onOpen: ignore
+  - port: 24000
+    onOpen: ignore
+  - port: 6060
+    onOpen: ignore
+  - port: 1316
+    onOpen: ignore
   - name: Secret Box App Preview
     port: 5173
     onOpen: open-preview
-  - name: Local Secret gRPC
-    port: 9091
-  - name: Local Faucet
-    port: 5000
