@@ -15,6 +15,7 @@ const secretBoxCode = import.meta.env.VITE_SECRET_BOX_CODE
 const secretBoxHash = import.meta.env.VITE_SECRET_BOX_HASH
 const secretBoxAddress = import.meta.env.VITE_SECRET_BOX_ADDRESS
 
+console.log(`local gRPC = ${localSecretUrl}`)
 console.log(`code id = ${secretBoxCode}`)
 console.log(`contract hash = ${secretBoxHash}`)
 console.log(`contract address = ${secretBoxAddress}`)
