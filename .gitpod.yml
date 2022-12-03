@@ -42,7 +42,7 @@ tasks:
       gp ports await 9091
       e="LOCALSECRET_GRPC=$(gp url 9091)"
       eval $(gp env -e $e)
-      echo "Ready to deploy and instantiate secret contract to local blockchain"
+      echo "Ready to build, test, deploy and instantiate secret contract to local blockchain"
     openMode: split-right
 
   - name: Secret Box Frontend
