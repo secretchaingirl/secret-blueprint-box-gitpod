@@ -21,6 +21,8 @@ github:
 tasks:
   - name: LocalSecret
     command: |
+      unset LOCALSECRET_GRPC
+      unset VITE_LOCALSECRET_GRPC
       echo "LocalSecret environment ready"
     openMode: split-right
 
@@ -40,6 +42,8 @@ tasks:
       scripts/localsecret_healthcheck.sh
       echo "Wait for LocalSecret gRPC-Web"
       gp ports await 9091
+      unset LOCALSECRET_GRPC
+      unset VITE_LOCALSECRET_GRPC
       e="LOCALSECRET_GRPC=$(gp url 9091)"
       eval $(gp env -e $e)
       echo "Ready to build, test, deploy and instantiate secret contract to local blockchain"
@@ -60,6 +64,7 @@ tasks:
       echo "Wait for LocalSecret gRPC-Web"
       gp ports await 9091
       echo "Setup Vite Environment variables"
+      unset LOCALSECRET_GRPC
       e="LOCALSECRET_GRPC=$(gp url 9091)"
       eval $(gp env -e $e)
       unset VITE_SECRET_BOX_CODE
